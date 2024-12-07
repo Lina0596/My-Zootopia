@@ -12,18 +12,20 @@ def get_data(animals_data):
     """ Generates content from JSON file """
     output = ""
     for animal in animals_data:
+        output += '<li class="cards__item">\n'
         if "name" in animal:
             name = animal["name"]
-            output += f"Name: {name}\n"
+            output += f"Name: {name}<br/>\n"
         if "diet" in animal["characteristics"]:
             diet = animal["characteristics"]["diet"]
-            output += f"Diet: {diet}\n"
+            output += f"Diet: {diet}<br/>\n"
         if "locations" in animal:
             location = animal["locations"][0]
-            output += f"Location: {location}\n"
+            output += f"Location: {location}<br/>\n"
         if "type" in animal["characteristics"]:
             type = animal["characteristics"]["type"]
-            output += f"Type: {type}\n"
+            output += f"Type: {type}<br/>\n"
+        output += '</li>\n'
     return output
 
 data_str = get_data(animals_data)
