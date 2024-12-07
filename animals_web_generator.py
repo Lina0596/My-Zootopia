@@ -5,32 +5,27 @@ def load_data(file_path):
     with open(file_path, "r") as handle:
         return json.load(handle)
 
-animals_data = load_data("animals_data.json")
 
-
-def get_data(animals_data):
+def serialize_animal(animals_data):
     """ Generates content from JSON file """
-    output = ""
-    for animal in animals_data:
-        output += '<li class="cards__item">\n'
-        if "name" in animal:
-            name = animal["name"]
-            output += f'<div class="card__title">{name}</div>\n'
-        output += '<p class ="card__text">\n'
-        if "diet" in animal["characteristics"]:
-            diet = animal["characteristics"]["diet"]
-            output += f"<strong>Diet:</strong> {diet}<br/>\n"
-        if "locations" in animal:
-            location = animal["locations"][0]
-            output += f"<strong>Location:</strong> {location}<br/>\n"
-        if "type" in animal["characteristics"]:
-            type = animal["characteristics"]["type"]
-            output += f"<strong>Type:</strong> {type}<br/>\n"
-        output += '</p>\n'
-        output += '</li>\n'
+    output = ''
+    output += '<li class="cards__item">\n'
+    if "name" in animal:
+        name = animal["name"]
+        output += f'<div class="card__title">{name}</div>\n'
+    output += '<p class ="card__text">\n'
+    if "diet" in animal["characteristics"]:
+        diet = animal["characteristics"]["diet"]
+        output += f"<strong>Diet:</strong> {diet}<br/>\n"
+    if "locations" in animal:
+        location = animal["locations"][0]
+        output += f"<strong>Location:</strong> {location}<br/>\n"
+    if "type" in animal["characteristics"]:
+        type = animal["characteristics"]["type"]
+        output += f"<strong>Type:</strong> {type}<br/>\n"
+    output += '</p>\n'
+    output += '</li>\n'
     return output
-
-data_str = get_data(animals_data)
 
 
 def content_html(html_file_path, data_str, new_html_file_path):
@@ -41,8 +36,11 @@ def content_html(html_file_path, data_str, new_html_file_path):
     with open(new_html_file_path, "w") as html_file:
         html_file.write(new_html_data)
 
-content_html("animals_template.html", data_str, "animals.html")
 
-
-
+if __name__ == "__main__":
+    animals_data = load_data("animals_data.json")
+    output = ''
+    for animal in animals_data:
+        output += serialize_animal(animals_data)
+        content_html("animals_template.html", output, "animals.html")
 
